@@ -1,0 +1,14 @@
+node_modules
+dist
+test/temp
+.sass-cache
+app/bower_components
+.tmp
+test/bower_components/
+v2_yeoman/
+.DS_Store
+.jshintrc
+.yo-rc.json
+.gitattributes
+.editorconfig
+.bowerrc
