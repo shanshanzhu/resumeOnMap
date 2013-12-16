@@ -26,9 +26,23 @@
     }
   });
   
-  require(["app"],function(app){
-    new app().$el.appendTo($('.container'));
+  require(["view/appView", "model/app",'jquery'],function(AppView, App) {
+    $(function(){
+      var appView = new AppView({model: new App()})
+      appView.$el.appendTo($('.container'));
+
+    });
+    // window.addEventListener("load", function () {
+    // // window.removeEventListener("load", load, false); //remove listener, no longer needed
+    //   console.log("document ready occurred!");
+    
   });
+
+//     window.onload = function() {
+//       console.log("document ready occurred!");
+// };
+
+ 
 
 
 })();

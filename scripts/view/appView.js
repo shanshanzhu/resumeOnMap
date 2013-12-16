@@ -1,11 +1,8 @@
-define(["backbone","jquery","handlebar"], function(){
+define(["./mapView", "backbone","jquery","handlebar"], function(MapView){
 
   var AppView = Backbone.View.extend({
 
-    template: Handlebars.compile("<p>Hello, my name is {{name}}. I am from {{hometown}}. I have " +
-               "{{kids.length}} kids:</p>" +
-               "<ul>{{#kids}}<li>{{name}} is {{age}}</li>{{/kids}}</ul>"),
-    // <div class={{}}></div>
+    template:"  <div class=map-canvas></div>",
 
 
     initialize: function(){
@@ -18,12 +15,7 @@ define(["backbone","jquery","handlebar"], function(){
     },
 
     render: function () {
-      debugger;
-
-      var data = { "name": "Alan", "hometown": "Somewhere, TX",
-               "kids": [{"name": "Jimmy", "age": "12"}, {"name": "Sally", "age": "4"}]};
-      var template = this.template(data);
-      this.$el.html(template)
+      this.$('.map-canvas').html(new MapView({model: this.model.get('map')}).el);
       return this;
     }
 
@@ -34,10 +26,7 @@ define(["backbone","jquery","handlebar"], function(){
 
       // var map;
       // var initialize = function() {
-      //   var mapOptions = {
-      //     zoom: 3,
-      //     center: new google.maps.LatLng(33.5, -177)
-      //   };
+      
       //   map = new google.maps.Map(document.getElementById('map-canvas'),
       //       mapOptions);
       // }
@@ -49,4 +38,3 @@ define(["backbone","jquery","handlebar"], function(){
       //   console.log('a');
       //   console.log(google.maps);
       // });
-
