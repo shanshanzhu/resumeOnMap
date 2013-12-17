@@ -8,7 +8,7 @@ define(["./map", "./textTag", "backbone", "jquery", "handlebar"], function(Map, 
   var App = Backbone.Model.extend({
     
     initialize: function(){
-      this.set('map', new Map());
+      this.set('mapModel', new Map());
       //var marker = new Marker({map:});
     },
   

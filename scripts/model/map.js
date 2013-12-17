@@ -9,6 +9,9 @@ define(["backbone","jquery","handlebar","underscore"], function(){
     },
 
     initialize: function() {
+      // this.on('initMap', function(map){
+      //   console.log()
+      // });
       // console.log(this.get('mapOptions'));
 
       

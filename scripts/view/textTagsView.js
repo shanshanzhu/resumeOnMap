@@ -1,17 +1,28 @@
-define(["backbone","jquery","handlebar"], function(){
+define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView){
 
   var textTagsView = Backbone.Collection.extend({
 
-    initialize: function() {
+    initialize: function(options) {
+      // this.render();
+      // this.set(options)
+      // debugger;
+      this.collectionModel = options.collection;
+      this.map = options.map;
+      this.collectionModel.on('add change edit', this.render);//could be updated in future.
       this.render();
-      this.collection.on('add remove change', this.render)      
+
     },
 
     render: function() {
       //to do: setTimeout parameters
-      var views = this.collection.each(function(textTag){
-        new textTagView({model: textTag}).el
+      var self = this;
+      var views = this.collectionModel.each(function(textTag){
+        new TextTagView({
+          model: textTag,
+          map: self.map
+        }).el
       });
+    }
 
 
   });

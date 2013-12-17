@@ -1,13 +1,12 @@
-define(["./textTagView", "../model/textTag",
- "backbone","jquery","handlebar"], function(TexTagView, TextTag){
+define(["./textTagsView", "../model/textTags",
+ "backbone","jquery","handlebar"], function(TexTagsView, TextTags){
 
   var Controller = Backbone.View.extend({
 
     template: Handlebars.compile("{{#each collection}}<button class='{{feature}}'>{{feature}}</button>{{/each}}"),
 
-    initialize: function(){
+    initialize: function(options){
       this.render();
-    
     },
 
     events: {
@@ -19,11 +18,9 @@ define(["./textTagView", "../model/textTag",
       var collection = this.collection.filter(function(item){
         return item.feature === feature;
       });
-      debugger;
-      new TexTagView({
-        collection: new TextTags(collection[0]['content']),//model: new texTag()
-        map: this.map
-      });
+      this.model.trigger('renderTextTagsView', collection[0]['content']);
+      //this is listened by appView to trigger a collection model and collection view.
+
     },
 
     render: function () {

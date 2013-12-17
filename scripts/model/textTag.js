@@ -1,14 +1,15 @@
 define(["backbone","jquery","handlebar"], function(){
 
-  var textmodel = Backbone.Model.extend({
+  var textTag = Backbone.Model.extend({
 
 
     initialize: function(options) {
       _.extend(this.attributes, options);
+      console.log('something is happening')
       
     },
 
   });
 
-  return textmodel;
+  return textTag;
 });

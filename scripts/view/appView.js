@@ -1,4 +1,5 @@
-define(["./mapView", "./controllerView", "backbone","jquery","handlebar"], function(MapView, ControllerView){
+define(["./mapView", "./controllerView", "./textTagsView", "../model/textTags",
+  "backbone","jquery","handlebar"], function(MapView, ControllerView, TexTagsView, TextTags){
 
   var AppView = Backbone.View.extend({
 
@@ -8,13 +9,13 @@ define(["./mapView", "./controllerView", "backbone","jquery","handlebar"], funct
       // mapView = new MapView({model: new MapMode()});
       this.$el.html(this.template);
       this.mapView = new MapView({
-        model: this.model.get('map'),
+        model: this.model.get('mapModel'),
         el: this.$('.map-canvas')
       });
 
       this.controllerView = new ControllerView({
         collection: [
-          {'feature':'Education',
+          {'feature': 'Education',
           'content': [
               {"location":{}, "text": ''},
               {"location":{}, "text": ''}
@@ -22,21 +23,36 @@ define(["./mapView", "./controllerView", "backbone","jquery","handlebar"], funct
           },
           {'feature':'Work',
           'content': [
-              {"longitude":3,'latitude':4, "text": ''},
-              {"longitude":3,'latitude':4, "text": ''}
+              {"longitude":42, 'latitude':-176, "text": ''},
+              {"longitude":55,'latitude':-200, "text": ''}
             ]
           }
           ],
+        model: this.model,
         el: this.$('.status-btn-holder')
         // collection: this.model.get('textTags')
       });
+      this.model.on('renderTextTagsView', this.renderTextTagsView, this);
 
-      this.model.trigger('initialLoad');
-      this.model.on('initialLoad', this.controllerView.render)
+      //todo: render initial movie flow;
+      // this.model.trigger('initialLoad');
+      // this.model.on('initialLoad', this.controllerView.render)
       this.render();
     },
 
     events: {
+
+    },
+
+    renderTextTagsView: function(params){
+      new TexTagsView({
+        collection: new TextTags(params),
+        map: this.mapView.map
+      });
+    },
+
+    renderInit: function(map) {
+      debugger;
 
     },
 
