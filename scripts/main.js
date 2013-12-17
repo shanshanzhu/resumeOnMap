@@ -28,21 +28,11 @@
   
   require(["view/appView", "model/app",'jquery'],function(AppView, App) {
     $(function(){
-      var appView = new AppView({model: new App()})
-      appView.$el.appendTo($('.container'));
-
+      new AppView({
+        model: new App(),
+        el: $('.container')
+      })
     });
-    // window.addEventListener("load", function () {
-    // // window.removeEventListener("load", load, false); //remove listener, no longer needed
-    //   console.log("document ready occurred!");
-    
   });
-
-//     window.onload = function() {
-//       console.log("document ready occurred!");
-// };
-
- 
-
 
 })();

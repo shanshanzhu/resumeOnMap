@@ -2,24 +2,11 @@ define(["backbone","jquery","handlebar"], function(){
 
   var MapView = Backbone.View.extend({
 
-    // template: Handlebars.compile("<div class = 'map-canvas'></div>"),
-    // <div class={{}}></div>
-
-
     initialize: function(){
-      debugger;
-      var map = new google.maps.Map(document.getElementsByClassName('container')[0], this.model.get('mapOptions'));
-      //       mapOptions);
-      this.render();
+      var map = new google.maps.Map(this.el, this.model.get('mapOptions'));
+      //this blend the dom into the this.el, rather than append. 
     },
 
-    events: {
-
-    },
-
-    render: function () {
-      return this;
-    }
 
   });
 

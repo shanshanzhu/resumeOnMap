@@ -1,12 +1,38 @@
-define(["./mapView", "backbone","jquery","handlebar"], function(MapView){
+define(["./mapView", "./controllerView", "backbone","jquery","handlebar"], function(MapView, ControllerView){
 
   var AppView = Backbone.View.extend({
 
-    template:"  <div class=map-canvas></div>",
-
+    template:"<div class=map-canvas></div><div class=status-btn-holder></div>",
 
     initialize: function(){
       // mapView = new MapView({model: new MapMode()});
+      this.$el.html(this.template);
+      this.mapView = new MapView({
+        model: this.model.get('map'),
+        el: this.$('.map-canvas')
+      });
+
+      this.controllerView = new ControllerView({
+        collection: [
+          {'feature':'Education',
+          'content': [
+              {"location":{}, "text": ''},
+              {"location":{}, "text": ''}
+            ]
+          },
+          {'feature':'Work',
+          'content': [
+              {"longitude":3,'latitude':4, "text": ''},
+              {"longitude":3,'latitude':4, "text": ''}
+            ]
+          }
+          ],
+        el: this.$('.status-btn-holder')
+        // collection: this.model.get('textTags')
+      });
+
+      this.model.trigger('initialLoad');
+      this.model.on('initialLoad', this.controllerView.render)
       this.render();
     },
 
@@ -14,8 +40,12 @@ define(["./mapView", "backbone","jquery","handlebar"], function(MapView){
 
     },
 
+    renderControllerView: function() {
+      debugger;
+      
+    },
+
     render: function () {
-      this.$('.map-canvas').html(new MapView({model: this.model.get('map')}).el);
       return this;
     }
 

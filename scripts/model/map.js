@@ -4,7 +4,7 @@ define(["backbone","jquery","handlebar","underscore"], function(){
     defaults: {
       "mapOptions": {
         zoom: 3,
-        center: new google.maps.LatLng(33.5, -177)//to do set it from user IP address;
+        center: new google.maps.LatLng(42, -176)//to do set it from user IP address;
       }
     },
 

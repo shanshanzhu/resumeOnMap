@@ -1,5 +1,17 @@
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
+      html, body, .map-canvas, .container {
+
+        width: 100%;
+        height :100%;
+      }
+      .map-canvas {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .status-btn-holder {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        height:25%;
       }

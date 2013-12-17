@@ -1,11 +1,10 @@
 define(["backbone","jquery","handlebar"], function(){
 
   var textmodel = Backbone.Model.extend({
-    // defaults: {
-    //   "options": 
-    // },
 
-    initialize: function() {
+
+    initialize: function(options) {
+      _.extend(this.attributes, options);
       
     },
 
