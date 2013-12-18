@@ -17,22 +17,31 @@ define(["./mapView", "./controllerView", "./textTagsView", "../model/textTags",
         collection: [
           {'feature': 'Education',
           'content': [
-              {"location":{}, "text": ''},
-              {"location":{}, "text": ''}
+              {"longitude":116.32, 'latitude':40, "text": 'Bachelor of Science'},
+              {"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
             ]
           },
           {'feature':'Work',
           'content': [
-              {"longitude":42, 'latitude':-176, "text": ''},
-              {"longitude":55,'latitude':-200, "text": ''}
+              {"longitude":-125, 'latitude':42, "text": 'Research Data Analyst'},
+              {"longitude":-220,'latitude':30, "text": 'Software Consultant'}
+            ]
+          },
+          {'feature':'all',
+          'content': [
+              {"longitude":-125, 'latitude':42, "text": 'Research Data Analyst'},
+              {"longitude":-220,'latitude':30, "text": 'Software Consultant'},
+                 {"longitude":116.32, 'latitude':40, "text": 'Bachelor of Science'},
+              {"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
             ]
           }
           ],
         model: this.model,
-        el: this.$('.status-btn-holder')
+        el: this.$('.status-btn-holder'),
+        map: this.mapView.map
         // collection: this.model.get('textTags')
       });
-      this.model.on('renderTextTagsView', this.renderTextTagsView, this);
+      // this.model.on('renderTextTagsView', this.renderTextTagsView, this);
 
       //todo: render initial movie flow;
       // this.model.trigger('initialLoad');
@@ -44,12 +53,12 @@ define(["./mapView", "./controllerView", "./textTagsView", "../model/textTags",
 
     },
 
-    renderTextTagsView: function(params){
-      new TexTagsView({
-        collection: new TextTags(params),
-        map: this.mapView.map
-      });
-    },
+    // renderTextTagsView: function(params){
+    //   new TexTagsView({
+    //     collection: new TextTags(params),
+    //     map: this.mapView.map
+    //   });
+    // },
 
     renderInit: function(map) {
       debugger;

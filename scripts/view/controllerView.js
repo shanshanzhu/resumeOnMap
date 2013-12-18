@@ -6,6 +6,7 @@ define(["./textTagsView", "../model/textTags",
     template: Handlebars.compile("{{#each collection}}<button class='{{feature}}'>{{feature}}</button>{{/each}}"),
 
     initialize: function(options){
+      _.extend(this, options);
       this.render();
     },
 
@@ -18,7 +19,15 @@ define(["./textTagsView", "../model/textTags",
       var collection = this.collection.filter(function(item){
         return item.feature === feature;
       });
-      this.model.trigger('renderTextTagsView', collection[0]['content']);
+      // var self = this;
+      // setTimeout(function(){
+      // $('canvas').remove();
+        // self.model.trigger('renderTextTagsView', collection[0]['content']);
+      var textTagsView = new TexTagsView({
+        collection: new TextTags(collection[0]['content']),
+        map: this.map
+      });
+      // }, 1000)
       //this is listened by appView to trigger a collection model and collection view.
 
     },

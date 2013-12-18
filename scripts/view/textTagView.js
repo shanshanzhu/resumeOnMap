@@ -1,37 +1,51 @@
-define(["backbone","jquery","handlebar"], function(){
+define(["../../libs/maplabel", "backbone","jquery","handlebar"], function(MapLabel){
 
   var textTagView = Backbone.View.extend({
 
     // template: Handlebars.compile("<div class = 'map-canvas'></div>"),
 
     initialize: function(options){
-      debugger;
-      this.map = options.map;
+      _.extend(this, options);
       var lat = this.model.get('latitude');
       var lgt = this.model.get('longitude');
-        new google.maps.Marker({
-    position: new google.maps.LatLng(52.517683, 13.394393),
-    map: options.map,
-    draggable: false,
-    animation: google.maps.Animation.DROP
-  });
-      // new google.maps.Marker({
-      //     position: new google.maps.LatLng(52.511467, 13.447179),
-      //     map: this.map,
-      //     draggable: false,
-      //     animation: google.maps.Animation.DROP
-      //   });
+      var text = this.model.get('text');
+      new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lgt),
+        map: this.map,
+        draggable: false,
+        animation: google.maps.Animation.DROP
+      });
 
-      this.render();
+      var mapLabel = new MapLabel({
+          text: text,
+          position: new google.maps.LatLng(lat, lgt),
+          map: this.map,
+          fontSize: 14,
+          align: 'left'
+      });
+      // this.render();
     },
 
-    events: {
+    destroyView: function() {
 
-    },
+    //COMPLETELY UNBIND THE VIEW
+      this.undelegateEvents();
 
-    render: function () {
-      return this;
+      this.$el.removeData().unbind(); 
+
+      //Remove view from DOM
+      this.remove();  
+      Backbone.View.prototype.remove.call(this);
+
     }
+
+    // events: {
+
+    // },
+
+    // render: function () {
+    //   return this;
+    // }
 
   });
 
