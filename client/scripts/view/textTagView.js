@@ -12,7 +12,7 @@ define(["../../libs/maplabel", "backbone","jquery","handlebar"], function(MapLab
       new google.maps.Marker({
         position: new google.maps.LatLng(lat, lgt),
         map: this.map,
-        draggable: false,
+        draggable: true,
         animation: google.maps.Animation.DROP
       });
 

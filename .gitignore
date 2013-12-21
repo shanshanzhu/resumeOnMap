@@ -1,12 +1,57 @@
-node_modules
+# dependency #
+###################
+
+node_modules/
+bower_components/
+
+
+# reference files #
+###################
+otherGitHubResource/
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.csv
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+*.swp
+.Trashes
+ehthumbs.db
+Thumbs.db
 dist
 test/temp
 .sass-cache
-app/bower_components
 .tmp
-test/bower_components/
-v2_yeoman/
-.DS_Store
 .jshintrc
 .yo-rc.json
 .gitattributes
