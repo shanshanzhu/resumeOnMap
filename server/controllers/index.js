@@ -1,5 +1,5 @@
 exports.init = function (req, res) {
-  res.send('halo');
+  res.render('index');
 };
 
 exports.submitUrl = function () {
