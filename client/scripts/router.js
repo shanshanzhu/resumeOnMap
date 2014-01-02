@@ -1,5 +1,5 @@
 define(["model/app", "view/appView", "view/textTagsView",
-  "backbone"], function(App, AppView, TexTagsView){
+  "backbone","jquery"], function(App, AppView, TexTagsView){
     var data = [
           {'feature': 'Education',
           'content': [
@@ -96,7 +96,6 @@ define(["model/app", "view/appView", "view/textTagsView",
   var MapView = Backbone.View.extend({
 
     initialize: function(){
-      debugger;
       this.map = new google.maps.Map(this.el, this.model.mapOptions);
       //this blend the dom into the this.el, rather than append.
     }
@@ -104,12 +103,22 @@ define(["model/app", "view/appView", "view/textTagsView",
   });
 
   var UrlInputView = Backbone.View.extend({
-
-    template:"<form action='submit.html' method='post'> \
-      <input type='url' autofocus> \
+//add filter for linkedin
+    template:"<form method='post' action='/submiturl'> \
+      <input class='urlinput' type='text' name='urlinput' placeholder='Enter a valid linkedin url' autofocus> \
       <input type='submit' value='Go'> \
       </form>",
-
+    
+    events: {
+      "submit": "checkUrl"
+    },
+    checkUrl: function(e){
+      var text = $('.urlinput').val();
+      if (text.indexOf("www.linkedin.com/") === -1 ) {
+        e.preventDefault();
+        alert('please enter a valid linkedin public url');
+      }
+    },
     render: function() {
       this.$el.html(this.template);
     }
