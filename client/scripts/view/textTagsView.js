@@ -1,7 +1,7 @@
 define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView){
 
   var textTagsView = Backbone.Collection.extend({
-
+/*
     initialize: function(options) {
       // this.render();
       // this.set(options)
@@ -38,7 +38,7 @@ define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView)
       init(0);
     }
 
-
+*/
   });
 
   return textTagsView;

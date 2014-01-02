@@ -3,79 +3,45 @@ define(["./mapView", "./controllerView", "./textTagsView", "../model/textTags",
 
   var AppView = Backbone.View.extend({
 
-    template:"<div class=map-canvas></div><div class=status-btn-holder></div>",
+    template:"<div class=map-canvas></div> \
+    <div class=url-input></div>",
+    // <div class=status-btn-holder></div> \
 
     initialize: function(){
-      // mapView = new MapView({model: new MapMode()});
-      this.$el.html(this.template);
       this.mapView = new MapView({
-        model: this.model.get('mapModel'),
+        model: this.model,
         el: this.$('.map-canvas')
       });
 
-      this.controllerView = new ControllerView({
-        collection: [
-          {'feature': 'Education',
-          'content': [
-              {"longitude":116.32, 'latitude':40, "text": 'Bachelor of Science'},
-              {"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
-            ]
-          },
-          {'feature':'Work',
-          'content': [
-              {"longitude":-125, 'latitude':42, "text": 'Research Data Analyst'},
-              {"longitude":-220,'latitude':30, "text": 'Software Consultant'}
-            ]
-          },
-          {'feature':'all',
-          'content': [
-              {"longitude":-125, 'latitude':42, "text": 'Research Data Analyst'},
-              {"longitude":-220,'latitude':30, "text": 'Software Consultant'},
-                 {"longitude":116.32, 'latitude':40, "text": 'Bachelor of Science'},
-              {"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
-            ]
-          }
-          ],
+      this.urlInputView = new UrlInputView({
         model: this.model,
-        el: this.$('.status-btn-holder'),
-        map: this.mapView.map
-        // collection: this.model.get('textTags')
+        el: this.$('.url-input')
       });
-      // this.model.on('renderTextTagsView', this.renderTextTagsView, this);
 
-      //todo: render initial movie flow;
-      // this.model.trigger('initialLoad');
-      // this.model.on('initialLoad', this.controllerView.render)
-      this.render();
-    },
-
-    events: {
-
-    },
-
-    // renderTextTagsView: function(params){
-    //   new TexTagsView({
-    //     collection: new TextTags(params),
-    //     map: this.mapView.map
-    //   });
-    // },
-
-    renderInit: function(map) {
-      debugger;
-
-    },
-
-    renderControllerView: function() {
-      debugger;
-      
+      // this.controllerView = new ControllerView({
+        // collection: [],//todo: set data for controllerView;
+      //   model: this.model,
+      //   el: this.$('.status-btn-holder'),
+      //   map: this.mapView.map
+      // });
     },
 
     render: function () {
+      this.$el.html(this.template);
+      //todo: dim background
       return this;
     }
 
   });
 
+  var UrlInputView = Backbone.View.extend({
+
+    template:"<form action='submit.html' method='post'> \
+      <input type='url' autofocus> \
+      <input type='submit' value='Go'> \
+      </form>",
+
+  });
   return AppView;
 });
 

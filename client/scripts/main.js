@@ -26,12 +26,10 @@
     }
   });
   
-  require(["view/appView", "model/app",'jquery'],function(AppView, App) {
+  require(["router",'jquery'],function(Router) {
     $(function(){
-      new AppView({
-        model: new App(),
-        el: $('.container')
-      })
+      app = new Router();
+      Backbone.history.start({pushState: true});
     });
   });
 

@@ -14,6 +14,8 @@ console.log("****************************");
 
 // Configure Express server
 app.set('port', process.env.PORT || 3000);
+//set up the root folder for jade file. 
+//Here, in res.render('index'), will automatically look for the /server/views/index.jade'
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
@@ -29,9 +31,11 @@ app.use(express.cookieParser());//allow you to use app.cookie.
 app.use(express.bodyParser());
 app.use(express.session({ secret: 'keyboard cat' }));
 app.use(express.methodOverride());
-app.use(allowCrossDomain);
+app.use(allowCrossDomain);//allow cross domain query
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'client')));
+//set up the root folder for href,src in the index.jade file.
+
 app.use(function(err, req, res, next){
   console.log("ERROR:",err);
   res.status(err.status || 500);

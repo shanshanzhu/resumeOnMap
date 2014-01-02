@@ -9,7 +9,7 @@
         top: 0;
         left: 0;
       }
-      .status-btn-holder {
+      .status-btn-holder, .url-input {
         position: absolute;
         top: 80%;
         left: 50%;
