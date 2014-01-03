@@ -105,7 +105,7 @@ define(["model/app", "view/appView", "view/textTagsView",
   var UrlInputView = Backbone.View.extend({
 //add filter for linkedin
     template:"<form method='post' action='/submiturl'> \
-      <input class='urlinput' type='text' name='urlinput' placeholder='Enter a valid linkedin url' autofocus> \
+      <input class='urlinput' type='text' name='urlinput' placeholder='http://www.linkedin.com/' autofocus> \
       <input type='submit' value='Go'> \
       </form>",
     
@@ -114,7 +114,7 @@ define(["model/app", "view/appView", "view/textTagsView",
     },
     checkUrl: function(e){
       var text = $('.urlinput').val();
-      if (text.indexOf("www.linkedin.com/") === -1 ) {
+      if (text.indexOf("http://www.linkedin.com/") === -1 ) {
         e.preventDefault();
         alert('please enter a valid linkedin public url');
       }
