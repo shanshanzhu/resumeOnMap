@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 //set up the root folder for href,src in the index.jade file.
 
 app.use(function(err, req, res, next){
-  console.log("ERROR:",err);
+  console.log("ERROR_Server:",err);
   res.status(err.status || 500);
   res.render('500', { error: err });//may need to be changed?
 });

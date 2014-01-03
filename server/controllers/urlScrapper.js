@@ -6,16 +6,19 @@ exports.scrapeUrl = function(url, controller) {
   scraper(url, function(err, $) {
     console.log('downloading url from ', url);
     if (err) {throw err;}
-    var education = $('.summary-education.subsection-reorder');
-    if (education.length >= 0) {
-      exports.scrapePub($,controller);
+    var education = '.summary-education.subsection-reorder';
+    var experience = '#profile-experience';
+
+    if ($(education).length >= 0) {
+      // exports.scrapePub($,experience,controller);
+      exports.scrapePub($,education,controller);
     } else {
       controller.emit(eventName, {error:'invalidUrl'});
     }
   });
 };
 
-exports.scrapePub = function($, education,controller) {
+exports.scrapePub = function($, selector,controller) {
   var data =  {'feature': 'Education',
           'content': {
               "":{"longitude":116.32, 'latitude':40,
@@ -26,10 +29,7 @@ exports.scrapePub = function($, education,controller) {
             }
           };
  
-  //process education;
-  var eduLists = $('#profile-experience').children[1].children[0].children;
-
-  // var eduLists = $('.summary-education.subsection-reorder').children[1].children[0].children;
+  var categoryLists = $(selector)[0].children[1].children[0].children;
   var exception = function(tag, node){
     //check for cases where doesn't need to jump to the next children
     //case 1: children.length === 0;
@@ -43,11 +43,13 @@ exports.scrapePub = function($, education,controller) {
       });
     }
     return res;
-  }
-  var generateKey = function(list) {
+  };
+
+  var generateKey = function(storage, list) {
     //use three attributes to make sure the key is not duplicated
+    var key;
     if(list.getAttribute('class')){
-      var key = list.getAttribute('class').trim().replace(/ /g,'-');
+      key = list.getAttribute('class').trim().replace(/ /g,'-');
     }
     if(list.getAttribute('id')){
       key = key.concat('-').concat(list.getAttribute('id').trim().replace(/ /g,'-'));
@@ -56,15 +58,17 @@ exports.scrapePub = function($, education,controller) {
       key = key.concat('-').concat(list.getAttribute('name').trim().replace(/ /g,'-'));
     }
     if(storage[key]) {
-      key = key + exports.UUID();
+      key = key + '-' + exports.UUID();
     }
+    return key;
   };
 
   var traverse = function(lists, storage){
     //traverse the dom for education list
     Array.prototype.forEach.call(lists, function(list, i){
-      if (typeof i !== "number") { return; };
-      var key = generateKey(list);
+      console.log('*********');
+      var key = generateKey(storage, list);
+      console.log('key', key);
       if (!key && list.children.length > 0) {
         traverse(list.children, storage);
         return;
@@ -78,26 +82,22 @@ exports.scrapePub = function($, education,controller) {
     });
   };
   var item = {};
-  traverse(eduLists, item);
+  traverse(categoryLists, item);
 
-  var workList = $('#profile-experience').children[1].children[0].children;
-  controller.emit(eventName, data);
-
+  controller.emit(eventName, item);
 };
 
-exports.UUID = function() {
-  var s = new Array(36);
+exports.UUID = function(n) {
+  //generate random digits for reference, default as 8;
+  n = n || 8;
+  var s = new Array(n);
   var hexDigits = "0123456789abcdef";
-  for (var i = 0; i < 36; i++) {
+  for (var i = 0; i < n; i++) {
       s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
   }
-  s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-  s[8] = s[13] = s[18] = s[23] = "-";
-
+  //note: 0x10 = 16;
   var uuid = s.join("");
   return uuid;
 };
-//$('.background-education')
 
 
