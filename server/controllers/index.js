@@ -9,7 +9,6 @@ exports.submitUrl = function (req, res) {
   var urlScrapper = require('./urlScrapper.js').scrapeUrl;
   console.log(urlScrapper,'scraper');
   var controller = new EventEmitter();
-  console.log('url submitted');
 
   urlScrapper(req.body.urlinput, controller);
   controller.on('urlDownload', function(data) {
