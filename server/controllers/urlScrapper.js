@@ -50,25 +50,31 @@ exports.process = function($, keyword, data) {
 
 exports.sequence = function(json,keyword){
   //put the json object in an array, sorted by the start time.
-  var res = {
-    'feature': keyword,
-    'content': []
-  };
+  var startTime,
+      startTimeArr,
+      dateDigit,
+      res = {
+        'feature': keyword,
+        'content': []
+      };
+  console.log(json, 'sequencing');
   for (var key in json) {
-    var startTime = json[key]['period']['dtstart'];
-    var startTimeArr = startTime.split(' ');
-    if (startTimeArr.length === 1) {
-      //assume the startTime is "2004";
-      res.content.push([+startTime, json[key]]);
-    } else if (startTimeArr.length === 2) {
-      //assume the startTime is "September 2004";
-      var dateDigit = +startTimeArr[1] + (new Date(startTimeArr[0] + '01-10').getMonth() + 1)/100;
-      //examples of dateDigit is 2013.01 till 2013.12;
-      console.log(keyword,'keyword',startTime, dateDigit);
-      res.content.push([dateDigit, json[key]]);
-
+    if (!json[key]['period']) {
+    //default : use current year when users filled no timeline.
+      dateDigit = new Date().getFullYear();
+    } else {
+      startTime = json[key]['period']['dtstart'];
+      startTimeArr = startTime.split(' ');
+      if (startTimeArr.length === 1) {
+        //assume the startTime is "2004";
+        dateDigit = +startTime;
+      } else if (startTimeArr.length === 2) {
+        //assume the startTime is "September 2004";
+        dateDigit = +startTimeArr[1] + (new Date(startTimeArr[0] + '01-10').getMonth() + 1)/100;
+        //examples of dateDigit is 2013.01 till 2013.12;
+      }
     }
-    //to do : handle other exception cases
+    res.content.push([dateDigit, json[key]]);
   }
   res.content.sort(function(a,b){
     return a[0] - b[0];
