@@ -2,34 +2,83 @@ var scraper = require('scraper');
 var eventName = "urlDownload";
 
 exports.scrapeUrl = function(url, controller) {
-  console.log(url);
   scraper(url, function(err, $) {
     console.log('downloading url from ', url);
     if (err) {throw err;}
-    var education = '.summary-education.subsection-reorder';
-    var experience = '#profile-experience';
+    var education = 'profile-education';
+    var experience = 'profile-experience';
+    var data = [];
+    exports.process($, education, data);
+    exports.process($, experience, data);
 
-    if ($(education).length >= 0) {
-      // exports.scrapePub($,experience,controller);
-      exports.scrapePub($,education,controller);
+    if (data.length > 1) {
+      //handle the keyword === 'all' ;
+      exports.processAll(data);
+    } 
+    if (data.length > 0) {
+      controller.emit(eventName, data);
     } else {
-      controller.emit(eventName, {error:'invalidUrl'});
+      controller.emit(eventName, {'error':'cannot select education or experience from url provided'});
     }
   });
 };
 
-exports.scrapePub = function($, selector,controller) {
-  var data =  {'feature': 'Education',
-          'content': {
-              "":{"longitude":116.32, 'latitude':40,
-              "summary-fn-org": 'Bachelor of Science',
-              "details-education":"",
-            },
-              "":{"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
-            }
-          };
+exports.processAll = function(data) {
+  var res = {
+    'feature': 'all',
+    'content': []
+  };
+  data.forEach(function(li){
+    li.content.forEach(function(subList){
+      res.content.push(subList);
+    });
+  });
+  res.content.sort(function(a,b){
+    return a[0] - b[0];
+  });
+  data.push(res);
+};
+
+exports.process = function($, keyword, data) {
+  var selector = '#' + keyword;
+  if ($(selector).length > 0) {
+    var JSON = exports.getJsonFromUrl($,selector);
+    var Seq = exports.sequence(JSON, keyword.split('-')[1]);//only use the second half as keyword.
+    data.push(Seq);
+  }
+};
+
+exports.sequence = function(json,keyword){
+  //put the json object in an array, sorted by the start time.
+  var res = {
+    'feature': keyword,
+    'content': []
+  };
+  for (var key in json) {
+    var startTime = json[key]['period']['dtstart'];
+    var startTimeArr = startTime.split(' ');
+    if (startTimeArr.length === 1) {
+      //assume the startTime is "2004";
+      res.content.push([+startTime, json[key]]);
+    } else if (startTimeArr.length === 2) {
+      //assume the startTime is "September 2004";
+      var dateDigit = +startTimeArr[1] + (new Date(startTimeArr[0] + '01-10').getMonth() + 1)/100;
+      //examples of dateDigit is 2013.01 till 2013.12;
+      console.log(keyword,'keyword',startTime, dateDigit);
+      res.content.push([dateDigit, json[key]]);
+
+    }
+    //to do : handle other exception cases
+  }
+  res.content.sort(function(a,b){
+    return a[0] - b[0];
+  })
+  return res;
+};
  
+exports.getJsonFromUrl = function($, selector,controller) {
   var categoryLists = $(selector)[0].children[1].children[0].children;
+
   var exception = function(tag, node){
     //check for cases where doesn't need to jump to the next children
     //case 1: children.length === 0;
@@ -66,9 +115,7 @@ exports.scrapePub = function($, selector,controller) {
   var traverse = function(lists, storage){
     //traverse the dom for education list
     Array.prototype.forEach.call(lists, function(list, i){
-      console.log('*********');
       var key = generateKey(storage, list);
-      console.log('key', key);
       if (!key && list.children.length > 0) {
         traverse(list.children, storage);
         return;
@@ -81,21 +128,21 @@ exports.scrapePub = function($, selector,controller) {
       }
     });
   };
+
   var item = {};
   traverse(categoryLists, item);
 
-  controller.emit(eventName, item);
+  return item;
 };
 
 exports.UUID = function(n) {
-  //generate random digits for reference, default as 8;
+  //generate random digits for reference, default as 8;note: 0x10 = 16;
   n = n || 8;
   var s = new Array(n);
   var hexDigits = "0123456789abcdef";
   for (var i = 0; i < n; i++) {
       s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
   }
-  //note: 0x10 = 16;
   var uuid = s.join("");
   return uuid;
 };
