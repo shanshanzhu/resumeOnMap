@@ -57,7 +57,6 @@ exports.sequence = function(json,keyword){
         'feature': keyword,
         'content': []
       };
-  console.log(json, 'sequencing');
   for (var key in json) {
     if (!json[key]['period']) {
     //default : use current year when users filled no timeline.

@@ -1,61 +1,44 @@
-define(["./mapView", "./controllerView", "./textTagsView", "../model/textTags",
-  "backbone","jquery","handlebar"], function(MapView, ControllerView, TexTagsView, TextTags){
-
+define(["./mapView", "./controllerView", "./textTagsView", "./urlInputView",
+  "backbone","jquery","handlebar"], function(mapView, controllerView, texTagsView, urlInputView){
+  
   var AppView = Backbone.View.extend({
 
     template:"<div class=map-canvas></div> \
-    <div class=url-input></div>",
-    // <div class=status-btn-holder></div> \
+    <div class=url-input></div> \
+    <div class=status-btn-holder></div> \
+    ",
 
     initialize: function(){
-      this.mapView = new MapView({
-        model: this.model,
+      this.$el.html(this.template);
+      this.mapModel = this.model.get('mapModel');
+      this.textTags = this.model.get('textTags');
+
+      this.mapView = new mapView({
+        model: this.mapModel,
         el: this.$('.map-canvas')
       });
 
-      this.urlInputView = new UrlInputView({
-        model: this.model,
+      this.urlInputView = new urlInputView({
+        collection: this.textTags,
         el: this.$('.url-input')
       });
 
-      // this.controllerView = new ControllerView({
-        // collection: [],//todo: set data for controllerView;
-      //   model: this.model,
-      //   el: this.$('.status-btn-holder'),
-      //   map: this.mapView.map
-      // });
+      this.controllerView = new controllerView({
+        collection: this.textTags,
+        el: this.$('.status-btn-holder'),
+        map: this.mapView.map
+      });
+
+      this.texTagsView = new texTagsView({collection: this.textTags});
     },
 
     render: function () {
-      this.$el.html(this.template);
       //todo: dim background
+      this.urlInputView.render();
       return this;
     }
 
   });
 
-  var UrlInputView = Backbone.View.extend({
-
-    template:"<form action='submit.html' method='post'> \
-      <input type='url' autofocus> \
-      <input type='submit' value='Go'> \
-      </form>",
-
-  });
   return AppView;
 });
-
-      // var map;
-      // var initialize = function() {
-      
-      //   map = new google.maps.Map(document.getElementById('map-canvas'),
-      //       mapOptions);
-      // }
-      // var canvas = document.getElementById('map-canvas');
-      // google.maps.event.addDomListener(window, 'load', initialize);
-      // // google.maps.event.addDomListener(canvas, 'click', showAlert);
-      // canvas.addEventListener('click', function() {
-      //   debugger;
-      //   console.log('a');
-      //   console.log(google.maps);
-      // });

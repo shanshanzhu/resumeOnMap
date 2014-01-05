@@ -1,5 +1,5 @@
 define(["./textTagsView", "../model/textTags",
- "backbone","jquery","handlebar"], function(TexTagsView, TextTags){
+ "backbone","jquery","handlebar"], function(TextTagsView, TextTags){
 
   var Controller = Backbone.View.extend({
 
@@ -7,7 +7,7 @@ define(["./textTagsView", "../model/textTags",
 
     initialize: function(options){
       _.extend(this, options);
-      this.render();
+      this.collection.on('reset', this.render);
     },
 
     events: {
@@ -23,16 +23,17 @@ define(["./textTagsView", "../model/textTags",
       // setTimeout(function(){
       // $('canvas').remove();
         // self.model.trigger('renderTextTagsView', collection[0]['content']);
-      var textTagsView = new TexTagsView({
-        collection: new TextTags(collection[0]['content']),
-        map: this.map
-      });
+      // var textTagsView = new TexTagsView({
+      //   collection: new TextTags(collection[0]['content']),
+      //   map: this.map
+      // });
       // }, 1000)
       //this is listened by appView to trigger a collection model and collection view.
 
     },
 
     render: function () {
+      debugger;
       this.$el.html(this.template(this));
       return this;
     }
