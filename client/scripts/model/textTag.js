@@ -4,10 +4,10 @@ define(["backbone","jquery","handlebar"], function(){
 
 
     initialize: function(options) {
-      _.extend(this.attributes, options);
+      // _.extend(this.attributes, options);
       console.log('something is happening')
       
-    },
+    }
 
   });
 

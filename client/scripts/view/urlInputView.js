@@ -20,7 +20,7 @@ define(["backbone","jquery","handlebar"], function(){
       $.post('/submiturl',{urlinput: text}, function(data){
         // window.location.hash = 'submiturl';//to redirect to submiturl
         self.collection.reset(data);
-        self.$el.html(); //remove the inputBox View;
+        self.$el.html(''); //remove the inputBox View;
         console.log(data);
       })
     },

@@ -3,38 +3,19 @@ define(["./textTagsView", "../model/textTags",
 
   var Controller = Backbone.View.extend({
 
-    template: Handlebars.compile("{{#each collection}}<button class='{{feature}}'>{{feature}}</button>{{/each}}"),
-
-    initialize: function(options){
-      _.extend(this, options);
-      this.collection.on('reset', this.render);
-    },
+    template: Handlebars.compile("<button class='{{feature}}'>{{feature}}</button>"),
 
     events: {
       'click button': "renderTextTag"
     },
 
     renderTextTag: function(e) {
-      var feature = e.target.getAttribute('class');
-      var collection = this.collection.filter(function(item){
-        return item.feature === feature;
-      });
-      // var self = this;
-      // setTimeout(function(){
-      // $('canvas').remove();
-        // self.model.trigger('renderTextTagsView', collection[0]['content']);
-      // var textTagsView = new TexTagsView({
-      //   collection: new TextTags(collection[0]['content']),
-      //   map: this.map
-      // });
-      // }, 1000)
-      //this is listened by appView to trigger a collection model and collection view.
-
+      this.model.collection.trigger('showTextTags', this.model);
     },
 
     render: function () {
-      debugger;
-      this.$el.html(this.template(this));
+      this.$el.html(this.template(this.model.attributes));
+      //to fix. position
       return this;
     }
 

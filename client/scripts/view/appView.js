@@ -1,5 +1,5 @@
-define(["./mapView", "./controllerView", "./textTagsView", "./urlInputView",
-  "backbone","jquery","handlebar"], function(mapView, controllerView, texTagsView, urlInputView){
+define(["./mapView", "./controllerView", "./urlInputView", "./textTagsView",
+  "backbone","jquery","handlebar"], function(mapView, controllerView, urlInputView, textTagsView){
   
   var AppView = Backbone.View.extend({
 
@@ -10,26 +10,47 @@ define(["./mapView", "./controllerView", "./textTagsView", "./urlInputView",
 
     initialize: function(){
       this.$el.html(this.template);
-      this.mapModel = this.model.get('mapModel');
-      this.textTags = this.model.get('textTags');
-
+      this.map = this.model.get('map');
+      this.categories = this.model.get('categories');
       this.mapView = new mapView({
-        model: this.mapModel,
+        model: this.map,
         el: this.$('.map-canvas')
       });
 
       this.urlInputView = new urlInputView({
-        collection: this.textTags,
+        collection: this.categories,
         el: this.$('.url-input')
       });
 
-      this.controllerView = new controllerView({
-        collection: this.textTags,
-        el: this.$('.status-btn-holder'),
-        map: this.mapView.map
-      });
+      this.categories.on('reset', this.renderControllerView, this);
+      this.categories.on('showTextTags', this.showTextTags, this);
 
-      this.texTagsView = new texTagsView({collection: this.textTags});
+    },
+
+    showTextTags: function(categoryModel){
+      debugger;
+      var textTags = categoryModel.get('textTags');
+      var textTagsView = new textTagsView({
+        collection: textTags,
+        map: this.map
+      });
+      // var self = this;
+      // setTimeout(function(){
+      // $('canvas').remove();
+        // self.model.trigger('renderTextTagsView', collection[0]['content']);
+      // }, 1000)
+      //this is listened by appView to trigger a collection model and collection view.
+    },
+
+    renderControllerView: function(data){
+      var self = this;
+      this.categories.each(function(category){
+        var btn = new controllerView({model: category});
+        self.$('.status-btn-holder').append(btn.render().$el);
+      });
+      //for each model in collection, model.attributes is the {feature:, content:} 
+      //object as in data[0] of urlInputView.checkUrl .
+      //Now each button is a view, whose model is the categories Object {feature:, content:} 
     },
 
     render: function () {
