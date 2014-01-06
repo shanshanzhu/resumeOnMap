@@ -28,18 +28,12 @@ define(["./mapView", "./controllerView", "./urlInputView", "./textTagsView",
     },
 
     showTextTags: function(categoryModel){
-      debugger;
-      var textTags = categoryModel.get('textTags');
-      var textTagsView = new textTagsView({
-        collection: textTags,
+      var marker = new textTagsView({
+        model: categoryModel,
         map: this.map
       });
-      // var self = this;
-      // setTimeout(function(){
-      // $('canvas').remove();
-        // self.model.trigger('renderTextTagsView', collection[0]['content']);
-      // }, 1000)
-      //this is listened by appView to trigger a collection model and collection view.
+      marker.render();
+
     },
 
     renderControllerView: function(data){

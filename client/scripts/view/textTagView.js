@@ -3,7 +3,6 @@ define(["../../libs/maplabel", "backbone","jquery","handlebar"], function(MapLab
   var textTagView = Backbone.View.extend({
 
     // template: Handlebars.compile("<div class = 'map-canvas'></div>"),
-/*
     initialize: function(options){
       _.extend(this, options);
       var lat = this.model.get('latitude');
@@ -46,7 +45,6 @@ define(["../../libs/maplabel", "backbone","jquery","handlebar"], function(MapLab
     // render: function () {
     //   return this;
     // }
-*/
   });
 
   return textTagView;
