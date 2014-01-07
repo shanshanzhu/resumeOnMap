@@ -13,7 +13,7 @@ exports.submitUrl = function (req, res) {
   urlScrapper(req.body.urlinput, controller);
   controller.on('urlDownload', function(data) {
     res.send("res", data);
-  })
+  });
 };
 exports.share = function () {
 

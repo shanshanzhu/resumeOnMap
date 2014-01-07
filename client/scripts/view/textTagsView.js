@@ -19,15 +19,15 @@ define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView)
     },
 
     renderNext: function(textTagModel) {
-      debugger;
       console.log(textTagModel);
+      var currentMarker = new TextTagView({
+        model: textTagModel,
+        map: this.map,
+        dataset: this.datum
+      });
     }
 
-    //   var currentMarker = new TextTagView({
-    //       model: textTag,
-    //       map: self.map
-    //   });
-
+//this.model.collection.add([])
     //   var self = this;
     //   this.collection.each(function(textTag){
     //     currentView.on
