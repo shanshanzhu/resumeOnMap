@@ -4,26 +4,17 @@ define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView)
 
     initialize: function(options) {
       _.extend(this, options);
-
-      this.datum = this.model.get('content');
-      this.textTags = this.model.get('textTags');
-      this.textTags.on('add', this.renderNext, this);//could be updated in future.
+      this.model.textTags.on('add', this.render, this);//could be updated in future.
+      this.model.addTag();
     },
 
-    render: function() {
-      console.log(this.model);
+    render: function(textTagModel) {
       //to do : add connection lines;
-      if (this.textTags.length === 0) {
-        this.textTags.add([this.datum[0]]);
-      }
-    },
-
-    renderNext: function(textTagModel) {
-      console.log(textTagModel);
+      console.log(textTagModel,'textTagModel');
       var currentMarker = new TextTagView({
         model: textTagModel,
-        map: this.map,
-        dataset: this.datum
+        category: this.model,
+        map: this.map
       });
     }
 
