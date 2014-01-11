@@ -27,12 +27,11 @@ define(["./mapView", "./controllerView", "./urlInputView", "./textTagsView",
 
     },
 
-    showTextTags: function(categoryModel){
+    showTextTags: function(category){
       var marker = new textTagsView({
-        model: categoryModel,
-        map: this.map
+        model: category,//this is the model in categories collection
+        map: this.mapView.map
       });
-      marker.render();
 
     },
 
