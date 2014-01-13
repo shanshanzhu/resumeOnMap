@@ -16,25 +16,8 @@ define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView)
         category: this.model,
         map: this.map
       });
+      //another way to do it is to set('category', this.model) in textTag.js)
     }
-
-//this.model.collection.add([])
-    //   var self = this;
-    //   this.collection.each(function(textTag){
-    //     currentView.on
-    //   });
-    //   var models = this.collectionModel.models;
-    //   var init = function(i, currentView) {
-    //     setTimeout(function() {
-    //       debugger;
-    //       if (currentView) { currentView.destroyView();}
-    //       if (i < models.length -1) {
-    //         init(i+1, currentView);
-    //       }
-    //     },3000);
-    //   };
-    //   init(0);
-    // }
 
   });
 

@@ -1,4 +1,4 @@
-define(["../../libs/maplabel", "backbone","jquery","handlebar","underscore"], function(MapLabel){
+define(["./maplabelView", "backbone","jquery","handlebar","underscore"], function(MapLabel){
 
   var textTagView = Backbone.View.extend({
 
@@ -8,10 +8,11 @@ define(["../../libs/maplabel", "backbone","jquery","handlebar","underscore"], fu
       var info = this.model.attributes[1];
       this.renderLocation(info);
       this.detail = this.getDetail(info);
+      this.model.on('renderNext', this.renderNext, this);
     },
 
     getDetail: function(info) {
-      //todo move it into textTag model file
+      //todo: move getDetail,getRes etc. into textTag model file, if need to edit tag position/text
       var results = [];
       var periods = info.period;
       var edu = info['details-education'];
@@ -21,7 +22,7 @@ define(["../../libs/maplabel", "backbone","jquery","handlebar","underscore"], fu
       if (desDetail && typeof desDetail === 'string') {
         results.push(desDetail);
       }
-      return _.flatten(results).join('\n');
+      return _.flatten(results);
     },
 
     getRes: function(cat,st,en,jointLetter) {
@@ -72,26 +73,28 @@ define(["../../libs/maplabel", "backbone","jquery","handlebar","underscore"], fu
       }
     },
 
-    createMarker: function() {
-      debugger;
-      var lgt = this.model.get('longitude');
-      var text = this.model.get('text');
-      new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lgt),
-        map: this.map,
-        draggable: true,
-        animation: google.maps.Animation.DROP
-      });
-
-      var mapLabel = new MapLabel({
-          text: text,
-          position: new google.maps.LatLng(lat, lgt),
+    createMarker: function(place) {
+      var loc = place.geometry.location;
+      if (loc) {
+        this.marker = new google.maps.Marker({
+          position: loc,
           map: this.map,
-          fontSize: 14,
-          align: 'left'
-      });
-      // this.render();
+          draggable: false,//set to true so that marker is draggable 
+          animation: google.maps.Animation.DROP
+        });
 
+        if (this.detail) {
+          var mapLabel = new MapLabel({
+              text: this.detail,
+              position: loc,
+              map: this.map,
+              fontSize: 14,
+              align: 'left',
+              model: this.model
+
+          });
+        }
+      }
     },
 
     destroyView: function() {
