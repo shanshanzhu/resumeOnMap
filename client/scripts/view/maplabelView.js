@@ -46,7 +46,6 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
      */
     MapLabel.prototype.calculateCanvas = function(texts, font) {
       //estimation of canvas width and height from the input texts array;
-      debugger;
       
       var maxWidth = this.get('maxLineWidth') || 300;
       // var ratio = this.get('canvaseHeighWidthRatio') || 0.6;
