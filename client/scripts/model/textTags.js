@@ -4,10 +4,10 @@ define(["./textTag", "backbone","jquery","handlebar"], function(TextTag){
 
     model: TextTag,
 
-    initialize: function(options) {
+    initialize: function(arr,options) {
+      // Backbone.Collection.apply(this,arguments);
       console.log('in textTags');
-      // _.extend(this.attributes, options);
-      
+      _.extend(this, options);
     },
 
   });

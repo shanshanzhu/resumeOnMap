@@ -117,7 +117,7 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
         if(i < lines.length) {
           self.writeLine(lines, i, controller);
         } else {
-          self.model.trigger('renderNext');
+          self.model__.renderNext();
         }
       });
     };
@@ -151,7 +151,7 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
         } else {
           controller.emit('endOneLine',linesIndex + 1);
         }
-      }, 100);
+      }, 10);
     };
 
     /**

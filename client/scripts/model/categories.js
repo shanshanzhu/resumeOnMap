@@ -3,7 +3,7 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
   var category = Backbone.Model.extend({
     
     initialize: function() {
-      this.set("textTags", new textTags());
+      this.set("textTags", new textTags([],{category:this}));
       this.datum = this.get('content');
       this.textTags = this.get('textTags');
     },
