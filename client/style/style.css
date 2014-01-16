@@ -1,3 +1,6 @@
+      * {
+        
+      }
       html, body, .map-canvas, .container {
 
         width: 100%;
@@ -10,8 +13,58 @@
         left: 0;
       }
       .status-btn-holder, .url-input {
+        font-family: sans-serif;
         position: absolute;
         top: 80%;
-        left: 50%;
         height:25%;
       }
+      .status-btn-holder {
+        left: 50%
+      }
+      .url-input {
+        left: 35%;
+      }
+      .urlinput {
+        font-size: 12px;
+        width: 300px;
+        height: 21px;
+        padding: 5px 6px;
+        border: 1px solid #d5d5d5
+      }
+      .spinner {
+        position: absolute;
+        width: 100px;
+        bottom: 150% !important;
+        left: 25%;
+      }
+      .submitBtn {
+        padding: 7.5px 12px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #333;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+        white-space: nowrap;
+        background-color: #eeeeee;
+        border-radius: 3px;
+        border: 1px solid #d5d5d5;
+      }
+
+      .experience,.education{
+        position: absolute;
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 6px;
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        display: inline;
+        border: 1px solid #d5d5d5;
+
+      }
+      .experience {
+        right: 150%;
+      }
+
+
+   
