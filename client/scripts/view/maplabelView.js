@@ -5,9 +5,9 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
     console.log(eventEmmitter,'eemit');
     var MapLabel = function (opt_options) {
       this.set('fontFamily', 'sans-serif');
-      this.set('fontSize', 12);
+      this.set('fontSize', 10);
       this.set('fontColor', '#000000');
-      this.set('strokeWeight', 4);
+      this.set('strokeWeight', 1);
       this.set("lineSpace", 5);
       this.set('strokeColor', '#ffffff');
       this.set('align', 'center');
@@ -98,10 +98,13 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
       var style = canvas.style;
       style.zIndex = /** @type number */(this.get('zIndex'));
       style.marginTop = '+ 1em';
+      style.borderRadius = '5px';
+      style.borderWidth = '1px';
+      style.backgroundColor = '#F5F5F5';
 
-      ctx.fillRect(0, 0, canvas.width, canvas.height);//change to clearRect for clear background
-      ctx.strokeStyle = this.get('strokeColor');
-      ctx.fillStyle = this.get('fontColor');//delete for clear background
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);//change to clearRect for clear background
+      // ctx.strokeStyle = this.get('strokeColor');
       ctx.font = font + 'px ' + this.get('fontFamily');
 
       this.ctx__ = ctx;

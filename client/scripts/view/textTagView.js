@@ -6,7 +6,6 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
     initialize: function(options){
       _.extend(this, options);
       this.model.renderLocation(this.map);
-      this.detail = this.model.getDetail();
       this.model.on('createMarker', this.createMarker, this);
     },
 
@@ -20,9 +19,9 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
           animation: google.maps.Animation.DROP
         });
 
-        if (this.detail) {
+        if (this.model.details) {
           var mapLabel = new MapLabel({
-              text: this.detail,
+              text: this.model.details,
               position: loc,
               map: this.map,
               fontSize: 14,

@@ -5,13 +5,47 @@ define(["backbone","jquery","handlebar"], function(){
 
     initialize: function(options) {
       _.extend(this.attributes, options);
-      console.log('something is happening');
-      debugger;
+      console.log('in textTag model');
+      this.feature = this.collection.category.get('feature');
+      this.information = this.attributes[1];
+      this.getData();
+    },
+    getData: function() {
+      var info = this.information;
+      if (info && this.feature === 'experience') {
+        this.organization = this.getOrganizationforExperience(info);
+        this.details = this.getDetailExperience(info);
+      } else if (info && this.feature === "education") {
+        this.organization = info['summary-fn-org'];
+        this.details = this.getDetailEducation(info);
+      }
+    },
+    getOrganizationforExperience: function(info) {
+      if (info.postitle && info.postitle['company-profile-public'] && info.postitle['company-profile-public']['org-summary']) {
+        return info.postitle['company-profile-public']['org-summary'];
+      } else if (info.period && info.period.location) {
+        return info.period.location;
+      }
+
+    },
+    getDetailExperience:function(info) {
+      var results = [];
+      var periods = info.period;
+      var desDetail = info['desc-past-position'];
+      if (info.postitle && info.postitle['false'] && info.postitle['false']["title"]){
+        results.push(info.postitle['false']["title"]);
+      }
+      results.push(this.getRes(periods,'dtstart','dtend',' - '));
+      if (desDetail && typeof desDetail === 'string') {
+        results.push(desDetail);
+      }
+      return _.flatten(results);
+
     },
 
-    getDetail: function() {
+
+    getDetailEducation: function(info) {
       //todo: move getDetail,getRes etc. into textTag model file, if need to edit tag position/text
-      var info = this.attributes[1];
       var results = [];
       var periods = info.period;
       var edu = info['details-education'];
@@ -41,15 +75,13 @@ define(["backbone","jquery","handlebar"], function(){
     },
 
     renderLocation: function(map) {
-      var info = this.attributes[1];
-      var organization = info['summary-fn-org'];//'Peking University'      
-      if (organization.length === 0) {
+      if (this.organization.length === 0) {
         console.log('No organization in this object');
         this.renderNext();
       } else {
         var service = new google.maps.places.PlacesService(map);
         var request = {
-          query: organization
+          query: this.organization
         };
         service.textSearch(request, this.getLocation.bind(this));
       }
@@ -58,7 +90,6 @@ define(["backbone","jquery","handlebar"], function(){
     renderNext: function() {
       //call the category model .addTag method
       //the next Tag is rendered if there is one. 
-      debugger;
       this.collection.category.addTag();
       //may consider destorying the current tag;
     },
