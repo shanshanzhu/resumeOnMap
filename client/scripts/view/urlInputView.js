@@ -4,11 +4,11 @@ define(["backbone","jquery","handlebar"], function(){
 //add filter for linkedin
     template: "<span> <form method='post' action='/submiturl.html'> \
       <input class='urlinput' type='text' name='urlinput' placeholder='http://www.linkedin.com/' autofocus> \
-      <input type='submit' value='Go'> \
+      <input type='submit' class = 'submitBtn' value='Go'> \
       </form></span> \
       <span class='spinner'>",
 
-    templateSpinner: "<img src='img/spinner.gif' width='30' />",
+    templateSpinner: "<img src='img/spinner.gif' class='spinner'/>",
     
     events: {
       "submit": "checkUrl"
