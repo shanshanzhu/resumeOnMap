@@ -13,7 +13,8 @@
     "email-templates": "0.0.5",
     "underscore": "1.5.x",
     "jQuery": "1.7.4",
-    "scraper": "0.0.9"
+    "scraper": "0.0.9",
+    "contextify": "0.1.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
