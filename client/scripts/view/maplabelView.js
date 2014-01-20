@@ -2,7 +2,6 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
     /* adpated from 
     https://code.google.com/p/google-maps-utility-library-v3/source/browse/trunk/maplabel/src/maplabel.js
     */
-    console.log(eventEmmitter,'eemit');
     var MapLabel = function (opt_options) {
       this.set('fontFamily', 'sans-serif');
       this.set('fontSize', 10);
@@ -48,35 +47,41 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
       //estimation of canvas width and height from the input texts array;
       
       var maxWidth = this.get('maxLineWidth') || 300;
+
+      var xMargin = 1.45;
+
       // var ratio = this.get('canvaseHeighWidthRatio') || 0.6;
       var margin = this.get('canvasMargin') || 1.2;
       var lines = texts;
 
       var finalWidth = 0;
-      var letterPerLine = Math.floor(maxWidth/font * 1.2); //times 1.2 to reduce margin on x-axis
+      var letterPerLine = Math.floor(maxWidth/font * xMargin); 
+      //times xMargin to reduce margin on x-axis
       var output = [];
 
       lines.forEach(function(line, i){
-        var len = line.length;
+        var len = line.length, thisLineWidth;
         if (len > letterPerLine) {
           for(var i = 0, j = Math.ceil(len / letterPerLine); i < j; i ++ ){
             output.push(line.substring(i*letterPerLine, (i+1)*letterPerLine));
           }
-          finalWidth = maxWidth;
+          thisLineWidth = maxWidth;
         } else {
           output.push(line);
-          var thisLineWidth = len * font;
-          finalWidth = finalWidth > thisLineWidth ? finalWidth :thisLineWidth;
+          thisLineWidth = Math.floor(len * font / xMargin) ;// xMargin for adjusting margin on x-axis
         }
+        console.log(thisLineWidth,finalWidth);
+        finalWidth = Math.max(finalWidth, thisLineWidth);
       });
 
       var result = {
         "width": Math.floor(finalWidth),
-        "height": Math.floor(output.length * (font + this.lineSpace__) + this.lineSpace__*5),//this.lineSpace__*5 is the margin on y axis
+        "height": Math.floor(output.length * (font + this.lineSpace__) + this.lineSpace__*5),
+        //this.lineSpace__*5 is the margin on y axis
         "lines": output
       };
       // result.height = result.width * ratio;
-
+      console.log(result);
       return result;
     };
 
@@ -130,7 +135,6 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
       var posX = 20;//initial positionX
       var posY = linesIndex * (this.font__ + this.lineSpace__) + this.lineSpace__*4;
       //+ this.lineSpace__*4 determines the initial posY.
-      console.log(posY)
       var letterIndex = 0;//initial letterIndex
       this.writeLetterInLine(line, letterIndex, posX, posY, controller, linesIndex);
     };
