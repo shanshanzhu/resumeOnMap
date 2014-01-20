@@ -44,7 +44,6 @@ define(["model/app", "view/appView",
     },
 
     renderTextTag: function(data) {
-      debugger;
       console.log('ah')
       console.log(data);
 
