@@ -5,13 +5,14 @@ define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView)
     initialize: function(options) {
       _.extend(this, options);
       this.model.textTags.on('add', this.render, this);//could be updated in future.
+
       this.model.addTag();
     },
 
     render: function(textTagModel) {
       //to do : add connection lines;
       console.log(textTagModel,'textTagModel');
-      var currentMarker = new TextTagView({
+      this.currentMarker = new TextTagView({
         model: textTagModel,
         category: this.model,
         map: this.map
