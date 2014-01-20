@@ -2,20 +2,18 @@ define(["backbone","jquery","handlebar"], function(){
 
 
   var Controller = Backbone.View.extend({
-    className: 'nextButton',
-    template:'<div>NEXT<div>',
+    template:'<button class="nextButtonInner">NEXT</button>',
 
     events: {
       'click': "renderNext"
     },
-
 
     renderNext: function(e) {
       this.model.renderNext();
     },
 
     render: function () {
-      this.$el.html(this.template(this.model.attributes));
+      this.$el.html(this.template);
       //to fix. position
       return this;
     }
