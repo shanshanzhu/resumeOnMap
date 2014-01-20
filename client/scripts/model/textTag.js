@@ -10,26 +10,33 @@ define(["backbone","jquery","handlebar"], function(){
       this.information = this.attributes[1];
       this.getData();
     },
+
     getData: function() {
       var info = this.information;
       if (info && this.feature === 'experience') {
         this.organization = this.getOrganizationforExperience(info);
         this.details = this.getDetailExperience(info);
       } else if (info && this.feature === "education") {
-        this.organization = info['summary-fn-org'];
+        var org = info['summary-fn-org'];
+        if (typeof org === 'string') {
+          this.organization = org;
+        } else if (Array.prototype.toString.call(org) === '[object Object]') {
+          this.organization = org[Object.keys(org)[0]];
+        }
         this.details = this.getDetailEducation(info);
       }
     },
     getOrganizationforExperience: function(info) {
-      if (info.postitle && info.postitle['company-profile-public'] && info.postitle['company-profile-public']['org-summary']) {
-        return info.postitle['company-profile-public']['org-summary'];
-      } else if (info.period && info.period.location) {
+      if (info.period && info.period.location) {
         return info.period.location;
+      } else if (info.postitle && info.postitle['company-profile-public'] && info.postitle['company-profile-public']['org-summary']) {
+        return info.postitle['company-profile-public']['org-summary'];
       }
-
     },
     getDetailExperience:function(info) {
-      var results = [];
+        debugger;
+
+      var results = [this.organization];
       var periods = info.period;
       var desDetail = info['desc-past-position'];
       if (info.postitle && info.postitle['false'] && info.postitle['false']["title"]){
@@ -46,7 +53,7 @@ define(["backbone","jquery","handlebar"], function(){
 
     getDetailEducation: function(info) {
       //todo: move getDetail,getRes etc. into textTag model file, if need to edit tag position/text
-      var results = [];
+      var results = [this.organization];
       var periods = info.period;
       var edu = info['details-education'];
       var desDetail = info['desc-details-education'];
@@ -56,6 +63,7 @@ define(["backbone","jquery","handlebar"], function(){
         results.push(desDetail);
       }
       return _.flatten(results);
+
     },
 
     getRes: function(cat,st,en,jointLetter) {
