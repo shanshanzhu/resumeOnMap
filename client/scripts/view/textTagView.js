@@ -7,6 +7,8 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
       _.extend(this, options);
       this.model.renderLocation(this.map);
       this.model.on('createMarker', this.createMarker, this);
+      this.model.on('hideView',this.hideView,this);
+      this.model.on('showView',this.showView,this);
     },
 
     createMarker: function(place) {
@@ -20,7 +22,7 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
         });
 
         if (this.model.details) {
-          var mapLabel = new MapLabel({
+          this.mapLabel = new MapLabel({
               text: this.model.details,
               position: loc,
               map: this.map,
@@ -28,6 +30,23 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
               align: 'left',
               model: this.model
           });
+        }
+      }
+    },
+
+    hideView: function(){
+      this.setView(null);
+    },
+
+    showView:function() {
+      this.setView(this.map);
+    },
+
+    setView: function(val) {
+      if (this.marker) {
+        this.marker.setMap(val);
+        if(this.mapLabel) {
+          this.mapLabel.setMap(val);
         }
       }
     },
