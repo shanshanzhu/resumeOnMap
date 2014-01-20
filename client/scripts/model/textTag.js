@@ -5,6 +5,7 @@ define(["backbone","jquery","handlebar"], function(){
 
     initialize: function(options) {
       _.extend(this.attributes, options);
+      this.set('hasView', false);
       console.log('in textTag model');
       this.feature = this.collection.category.get('feature');
       this.information = this.attributes[1];
@@ -34,8 +35,6 @@ define(["backbone","jquery","handlebar"], function(){
       }
     },
     getDetailExperience:function(info) {
-        debugger;
-
       var results = [this.organization];
       var periods = info.period;
       var desDetail = info['desc-past-position'];
@@ -49,7 +48,6 @@ define(["backbone","jquery","handlebar"], function(){
       return _.flatten(results);
 
     },
-
 
     getDetailEducation: function(info) {
       //todo: move getDetail,getRes etc. into textTag model file, if need to edit tag position/text
@@ -83,30 +81,41 @@ define(["backbone","jquery","handlebar"], function(){
     },
 
     renderLocation: function(map) {
-      if (this.organization.length === 0) {
+      if (!this.organization || this.organization.length === 0) {
         console.log('No organization in this object');
         this.renderNext();
       } else {
-        var service = new google.maps.places.PlacesService(map);
-        var request = {
-          query: this.organization
-        };
-        service.textSearch(request, this.getLocation.bind(this));
+        if (this.place) {
+          this.trigger('createMarker', this.place);
+        } else {
+
+          var service = new google.maps.places.PlacesService(map);
+          var request = {
+            query: this.organization
+          };
+          service.textSearch(request, this.getLocation.bind(this));
+        }
+
       }
     },
 
     renderNext: function() {
+      var index = this.collection.indexOf(this);
       //call the category model .addTag method
       //the next Tag is rendered if there is one. 
-      this.collection.category.addTag();
+      if (index < this.collection.length - 1) {
+        this.collection.trigger('renderNext',index + 1);
+      } else {
+        this.collection.category.trigger('end');
+      }
       //may consider destorying the current tag;
     },
 
     getLocation: function (results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        var place = results[0];
+        this.place = results[0];
         //assume the best rating to be the first one;
-        this.trigger('createMarker', place);
+        this.trigger('createMarker', this.place);
       } else {
         console.log('did not get search result from server');
         this.renderNext();
