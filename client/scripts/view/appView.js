@@ -28,6 +28,28 @@ define(["./mapView", "./controllerView", "./urlInputView", "./textTagsView",
     },
 
     showTextTags: function(category){
+      var feature = category.get('feature');
+      category.collection.each(function(cat){
+        if (cat.get('feature') !== feature) {
+          cat.textTags.each(function(textTag){
+            textTag.trigger('hideView');
+          });
+          //cat = other categories not clicked./
+          //listend by textTagsView;
+        }
+      });
+
+      category.collection.each(function(cat){
+        if (cat.get('feature') === feature) {
+          cat.textTags.each(function(textTag){
+            textTag.trigger('showView');
+          });
+          //cat = other categories not clicked./
+          //listend by textTagsView;
+        }
+      });
+
+
       var marker = new textTagsView({
         model: category,//this is the model in categories collection
         map: this.mapView.map
