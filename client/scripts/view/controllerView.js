@@ -9,12 +9,20 @@ define(["./textTagsView", "../model/textTags",
 
     template: Handlebars.compile("<button class='{{feature}}'>{{toUpper feature}}</button>"),
 
+    initialize: function() {
+      this.model.on('end', function(){
+        this.$('button').prop('disabled',false);
+      }, this);
+    },
+
     events: {
       'click button': "renderTextTag"
     },
 
+
     renderTextTag: function(e) {
       this.model.collection.trigger('showTextTags', this.model);
+      this.$('button').prop('disabled',true);
     },
 
     render: function () {
