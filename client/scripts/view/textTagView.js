@@ -33,6 +33,7 @@ define(["./maplabelView", "./nextButtonView","backbone","jquery","handlebar","un
               model: this.model
           });
         }
+        this.renderNextBtn();
         this.model.set('hasView',true);
       }
     },
@@ -41,8 +42,8 @@ define(["./maplabelView", "./nextButtonView","backbone","jquery","handlebar","un
       this.nextButtonView = new nextButtonView({
         model: this.model
       });
-      debugger;
-      this.$el.parent();
+      //find the major container and append button;
+      $('.nextButton').html(this.nextButtonView.render().el);
     },
 
     setZoom:function(){

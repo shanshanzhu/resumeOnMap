@@ -3,9 +3,10 @@ define(["./mapView", "./controllerView", "./urlInputView", "./textTagsView",
   
   var AppView = Backbone.View.extend({
 
-    template:"<div class=map-canvas></div> \
-    <div class=url-input></div> \
-    <div class=status-btn-holder></div> \
+    template:"<div class='map-canvas'></div> \
+    <div class='url-input'></div> \
+    <div class='status-btn-holder'></div> \
+    <div class='nextButton'><div> \
     ",
 
     initialize: function(){

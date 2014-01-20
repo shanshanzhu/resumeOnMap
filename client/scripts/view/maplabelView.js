@@ -125,7 +125,8 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
         if(i < lines.length) {
           self.writeLine(lines, i, controller);
         } else {
-          self.model__.renderNext();
+          // self.model__.renderNext();
+          //activate this line for automatic rendering next(movie like effect);
         }
       });
     };
