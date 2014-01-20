@@ -1,4 +1,4 @@
-define(["./maplabelView", "backbone","jquery","handlebar","underscore"], function(MapLabel){
+define(["./maplabelView", "./nextButtonView","backbone","jquery","handlebar","underscore"], function(MapLabel, nextButtonView){
 
   var textTagView = Backbone.View.extend({
 
@@ -14,15 +14,17 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
     createMarker: function(place) {
       var loc = place.geometry.location;
       if (loc) {
-        this.marker = new google.maps.Marker({
+        this.marker = this.marker || new google.maps.Marker({
           position: loc,
           map: this.map,
           draggable: false,//set to true so that marker is draggable 
           animation: google.maps.Animation.DROP
         });
+        this.setZoom();
+
 
         if (this.model.details) {
-          this.mapLabel = new MapLabel({
+          this.mapLabel = this.mapLable || new MapLabel({
               text: this.model.details,
               position: loc,
               map: this.map,
@@ -31,7 +33,21 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
               model: this.model
           });
         }
+        this.model.set('hasView',true);
       }
+    },
+
+    renderNextBtn: function() {
+      this.nextButtonView = new nextButtonView({
+        model: this.model
+      });
+      debugger;
+      this.$el.parent();
+    },
+
+    setZoom:function(){
+      this.map.setZoom(8);
+      this.map.setCenter(this.marker.getPosition());
     },
 
     hideView: function(){
@@ -40,6 +56,7 @@ define(["./maplabelView", "backbone","jquery","handlebar","underscore"], functio
 
     showView:function() {
       this.setView(this.map);
+      this.setZoom();
     },
 
     setView: function(val) {
