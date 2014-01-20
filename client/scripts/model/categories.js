@@ -6,16 +6,23 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
       this.set("textTags", new textTags([],{category:this}));
       this.datum = this.get('content');
       this.textTags = this.get('textTags');
-    },
-    //initialize an empty collection to allow for async add event
-
-    addTag: function() {
-      console.log('addTag in category model');
-      if (this.datum.length > 0) {
-        this.textTags.add([this.datum.shift()]);
-        //the argument of .add takes an array!!
+      var i = 0;
+      while(this.datum.length > 0) {
+        this.textTags.add([this.datum.shift()],{index:i});
+        i++;
       }
     }
+    //initialize an empty collection to allow for async add event
+
+    // addTag: function() {
+    //   console.log('addTag in category model');
+    //   if (this.datum.length > 0) {
+    //     this.textTags.add([this.datum.shift()]);
+    //     //the argument of .add takes an array!!
+    //   } else {
+
+    //   }
+    // }
   });//should be put ahead so that category is defined.
 
   var categories = Backbone.Collection.extend({
