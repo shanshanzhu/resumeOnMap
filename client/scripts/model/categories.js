@@ -15,7 +15,6 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
         this.textTags.add([this.datum.shift()]);
         //the argument of .add takes an array!!
       }
-
     }
   });//should be put ahead so that category is defined.
 
