@@ -27,7 +27,13 @@ define(["backbone","jquery","handlebar"], function(){
         // window.location.hash = 'submiturl';//to redirect to submiturl
         self.collection.reset(data);
         self.$el.html(''); //remove the inputBox View;
+        console.log(JSON.stringify(data));
         console.log(data);
+        console.log(data[0].content);
+        console.log(data[1].content);
+        console.log(data[2].content);
+
+
       })
       .done(function(){
 

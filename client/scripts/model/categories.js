@@ -7,6 +7,8 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
       this.datum = this.get('content');
       this.textTags = this.get('textTags');
       var i = 0;
+      console.log(JSON.stringify(this.datum));
+      debugger;
       while(this.datum.length > 0) {
         this.textTags.add([this.datum.shift()],{index:i});
         i++;
