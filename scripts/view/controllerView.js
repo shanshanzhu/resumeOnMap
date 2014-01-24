@@ -17,15 +17,15 @@ define(["backbone","jquery","handlebar"], function(){
     },
 
     inactivate: function(eventName) {
-      if (!this.$("button").hasClass('inactive')) {
-        this.$("button").addClass('inactive');
+      if (this.$("button").hasClass('active')) {
+        this.$("button").removeClass('active');
       }
     },
 
     renderTextTag: function(e) {
       this.model.collection.trigger('showTextTags', this.model);
-      if (this.$("button").hasClass('inactive')) {
-        this.$("button").removeClass('inactive');
+      if (!this.$("button").hasClass('active')) {
+        this.$("button").addClass('active');
       }
     },
 

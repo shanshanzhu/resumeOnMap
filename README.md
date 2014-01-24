@@ -3,15 +3,33 @@
 
 A full stack webapp to allow user to type in public linkedin profile
 page and visulize their work experience and education on Google MAP API
+### Master Branch
+```
+git clone 
+npm install 
+bower install
+grunt dev
+```
+When you local server is set up:
+type in the public linkedin profile page page
+it will render the user info as long as the the link provided is visible to public.
 
-Note: work in progress
+
+### singlePage Branch
+Server side code is removed.
+Pure front-end portion of the app.
+on github.io
+
 
 ### Technical Stacks
 Backbone/RequireJS/JQuery/Underscore
 Express/Node
 
 
-### Status update
+### Major update
+2013.1.24
+final wrap up.
+
 2013.1.20
 Major feature complete
 To be deployed.

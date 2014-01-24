@@ -75,10 +75,13 @@
         border: 1px solid #ddd;
         float:left;
       }
-      button.inactive {
+      .nextButton .inactive {
         color: #DEE1E4;
-        background: white;
       }
+      .status-btn-holder .active {
+        outline: -webkit-focus-ring-color auto 5px;
+      }
+
       .experience {
         right: 150%;
       }
