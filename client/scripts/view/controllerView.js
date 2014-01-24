@@ -1,5 +1,4 @@
-define(["./textTagsView", "../model/textTags",
- "backbone","jquery","handlebar"], function(TextTagsView, TextTags){
+define(["backbone","jquery","handlebar"], function(){
 
   Handlebars.registerHelper('toUpper', function(options) {
     return options.toUpperCase();
@@ -10,19 +9,24 @@ define(["./textTagsView", "../model/textTags",
     template: Handlebars.compile("<button class='{{feature}}'>{{toUpper feature}}</button>"),
 
     initialize: function() {
-      this.model.on('end', function(){
-        this.$('button').prop('disabled',false);
-      }, this);
+      this.model.on('inactivate', this.inactivate, this);
     },
 
     events: {
       'click button': "renderTextTag"
     },
 
+    inactivate: function(eventName) {
+      if (!this.$("button").hasClass('inactive')) {
+        this.$("button").addClass('inactive');
+      }
+    },
 
     renderTextTag: function(e) {
       this.model.collection.trigger('showTextTags', this.model);
-      this.$('button').prop('disabled',true);
+      if (this.$("button").hasClass('inactive')) {
+        this.$("button").removeClass('inactive');
+      }
     },
 
     render: function () {
