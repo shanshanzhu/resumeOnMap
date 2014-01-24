@@ -5,10 +5,10 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
     var MapLabel = function (opt_options) {
       this.set('fontFamily', 'sans-serif');
       this.set('fontSize', 10);
-      this.set('fontColor', '#000000');
+      this.set('fontColor', '#666');
       this.set('strokeWeight', 1);
       this.set("lineSpace", 5);
-      this.set('strokeColor', '#ffffff');
+      this.set('strokeColor', '#F5F5F5');
       this.set('align', 'center');
       this.set('zIndex', 1e3);
       this.set('maxLineWidth', 300);
@@ -109,7 +109,6 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
 
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);//change to clearRect for clear background
-      // ctx.strokeStyle = this.get('strokeColor');
       ctx.font = font + 'px ' + this.get('fontFamily');
 
       this.ctx__ = ctx;
@@ -150,7 +149,10 @@ define(['../libs/eventEmmitter','jquery',"underscore"], function(eventEmmitter) 
         var textWidth = textMeasure.width + posX + self.strokeWeight__;
         // style.marginLeft = self.getMarginLeft_(textWidth) + 'px';
         self.ctx__.lineWidth = self.strokeWeight__;
+        self.ctx__.strokeStyle = self.get('strokeColor');
+
         self.ctx__.strokeText(letter, posX , posY);
+        self.ctx__.fillStyle = self.get('fontColor');
         self.ctx__.fillText(letter, posX, posY);
       // Bring actual text top in line with desired latitude.
       // Cheaper than calculating height of text.
