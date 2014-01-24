@@ -8,7 +8,6 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
       this.textTags = this.get('textTags');
       var i = 0;
       console.log(JSON.stringify(this.datum));
-      debugger;
       while(this.datum.length > 0) {
         this.textTags.add([this.datum.shift()],{index:i});
         i++;
@@ -16,9 +15,6 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
     },
     //initialize an empty collection to allow for async add event
 
-    checkState: function() {
-
-    }
   });//should be put ahead so that category is defined.
 
   var categories = Backbone.Collection.extend({
