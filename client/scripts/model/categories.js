@@ -11,18 +11,12 @@ define(["./textTags", "backbone","jquery","handlebar"], function(textTags){
         this.textTags.add([this.datum.shift()],{index:i});
         i++;
       }
-    }
+    },
     //initialize an empty collection to allow for async add event
 
-    // addTag: function() {
-    //   console.log('addTag in category model');
-    //   if (this.datum.length > 0) {
-    //     this.textTags.add([this.datum.shift()]);
-    //     //the argument of .add takes an array!!
-    //   } else {
+    checkState: function() {
 
-    //   }
-    // }
+    }
   });//should be put ahead so that category is defined.
 
   var categories = Backbone.Collection.extend({

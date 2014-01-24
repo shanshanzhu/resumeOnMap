@@ -101,14 +101,36 @@ define(["backbone","jquery","handlebar"], function(){
 
     renderNext: function() {
       var index = this.collection.indexOf(this);
-      //call the category model .addTag method
+
       //the next Tag is rendered if there is one. 
-      if (index < this.collection.length - 1) {
-        this.collection.trigger('renderNext',index + 1);
-      } else {
-        this.collection.category.trigger('end');
-      }
+      if (index + 1 < this.collection.length) {
+        this.collection.trigger('renderNeighbour',index + 1);
+      } 
       //may consider destorying the current tag;
+    },
+
+    checkActiveState: function(i) {
+      //called by texttagsView~~
+        //double handle the case when collection.length === 1;
+        if ( i <= 0) {
+          this.collection.trigger('inactivate-prevButton');
+        } else {
+          this.collection.trigger('activate-prevButton');
+        }
+
+        if (i >= this.collection.length - 1) {
+          this.collection.trigger('inactivate-nextButtonInner');
+        } else {
+          this.collection.trigger('activate-nextButtonInner');
+        }
+
+    },
+
+    renderPrevious:function() {
+      var index = this.collection.indexOf(this);
+      if (index > 0) {
+        this.collection.trigger('renderNeighbour',index - 1);
+      } 
     },
 
     getLocation: function (results, status) {

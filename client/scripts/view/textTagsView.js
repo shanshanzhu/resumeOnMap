@@ -1,10 +1,21 @@
-define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView){
+define(["./textTagView", "./nextButtonView","backbone","jquery","handlebar"], function(TextTagView, nextButtonView){
 
   var textTagsView = Backbone.View.extend({
 
     initialize: function(options) {
       _.extend(this, options);
-      this.collection.on('renderNext', this.render, this);//could be updated in future.
+      this.collection.on('renderNeighbour', this.render, this);//could be updated in future.
+      if (this.collection.length > 1) {
+        this.renderNextBtn();
+      }
+    },
+
+    renderNextBtn: function() {
+      this.nextButtonView = new nextButtonView({
+        collection: this.collection
+      });
+      //find the major container and append button;
+      $('.nextButton').html(this.nextButtonView.render().el);
     },
 
     render: function(i) {
@@ -20,6 +31,8 @@ define(["./textTagView", "backbone","jquery","handlebar"], function(TextTagView)
           map: this.map
         });
       }
+      this.nextButtonView.currentModel = textTagModel;
+      this.nextButtonView.currentModel.checkActiveState(i);
       //another way to do it is to set('category', this.model) in textTag.js)
     }
 
