@@ -1,11 +1,14 @@
 #Resume On Map
 ===========
+visualized the app on 
+[![alt tag](https://raw2.github.com/shanshanzhu/resumeOnMap/master/client/img/screenShot.png)](http://shanshanzhu.github.io)
 
 A full stack webapp to allow user to type in public linkedin profile
 page and visulize their work experience and education on Google MAP API
 ### Master Branch
+
 ```
-git clone 
+git clone //add the repo link here
 npm install 
 grunt dev
 ```
@@ -17,12 +20,12 @@ it will render the user info as long as the the link provided is visible to publ
 ### singlePage Branch
 Server side code is removed.
 Pure front-end portion of the app.
-on github.io
+
 
 
 ### Technical Stacks
 Backbone/RequireJS/JQuery/Underscore
-Express/Node
+Grunt/Express/Node
 
 
 ### Major update
