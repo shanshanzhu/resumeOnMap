@@ -7,7 +7,6 @@ page and visulize their work experience and education on Google MAP API
 ```
 git clone 
 npm install 
-bower install
 grunt dev
 ```
 When you local server is set up:
