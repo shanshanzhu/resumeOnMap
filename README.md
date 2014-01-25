@@ -17,7 +17,8 @@ grunt dev
 
 - Type in the public linkedin profile page;(the url must be accessible to public)
 
-- Visualize the user's resume on map
+- go to your localhost:5000, and Visualize the user's resume on map
+
 
 ### singlePage Branch
 Source code for http://shanshanzhu.github.io
