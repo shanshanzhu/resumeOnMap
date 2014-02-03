@@ -1,4 +1,7 @@
 var express = require('express'),
+    http = require('http'),
+    https = require('https'),
+    fs = require('fs'),
     app = express(),
     path = require('path'),
     routes = require('./server/routes.js'),
@@ -13,7 +16,7 @@ console.log("****************************");
 
 
 // Configure Express server
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 //set up the root folder for jade file. 
 //Here, in res.render('index'), will automatically look for the /server/views/index.jade'
 app.set('views', __dirname + '/server/views');
@@ -36,6 +39,7 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'client')));
 //set up the root folder for href,src in the index.jade file.
 
+//handling error as a middleware
 app.use(function(err, req, res, next){
   console.log(req.body);
   console.log("ERROR_Server:",err);
@@ -46,5 +50,21 @@ app.use(function(err, req, res, next){
 // Initialize routing
 routes(app);
 
+var options = {
+    key:    fs.readFileSync('ssl/server.key',{encoding:'utf8'}),
+    cert:   fs.readFileSync('ssl/server.crt',{encoding:'utf8'}),
+    ca:     fs.readFileSync('ssl/ca.crt',{encoding:'utf8'}),
+    requestCert:        true,
+    rejectUnauthorized: false
+};
+// options.agent = new https.Agent(options);
 
-app.listen(port);
+
+// var options = {
+//   key: fs.readFileSync('key.pem',{encoding:'utf8'}),
+//   cert: fs.readFileSync('key-cert.pem',{encoding:'utf8'})
+// };
+console.log(options);
+// app.listen(port);
+// http.createServer(app).listen(port);
+https.createServer(options, app).listen(port);
