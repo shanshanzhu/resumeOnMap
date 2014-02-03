@@ -5,6 +5,7 @@ bower_components/
 build/
 package.json
 node_modules/
+ssl/
 
 # reference files #
 ###################
@@ -41,6 +42,7 @@ otherGitHubResource/
 
 # OS generated files #
 ######################
+*.pem
 .DS_Store
 .DS_Store?
 ._*
