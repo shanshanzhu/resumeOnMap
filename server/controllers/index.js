@@ -18,3 +18,8 @@ exports.submitUrl = function (req, res) {
 exports.share = function () {
 
 };
+
+exports.grantOauth = function(userInfo) {
+  console.log(userInfo);
+  console.log(userInfo.headers.cookie);
+}
