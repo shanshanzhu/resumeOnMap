@@ -19,7 +19,7 @@ html(lang="en")
     }
     var onLinkedInAuth = function() {
       // location.href = '/signin';
-      $.post('/signin');//fail
+      $.post('/auth');//fail
       //http://developer.linkedin.com/forum/jsapi-secure-cookie-empty-and-has-crc-end
       IN.API.Profile("me").result(displayProfiles);
     }
