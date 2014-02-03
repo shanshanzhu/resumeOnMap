@@ -16,6 +16,7 @@ module.exports = function(app, Models, schema){
   // Defines the indexCtrl routes
   app.get('/', indexCtrl.init);
   app.post('/submiturl', indexCtrl.submitUrl);
+  app.post('/signin',indexCtrl.grantOauth);
   app.post('/share', indexCtrl.share);
 
 };
