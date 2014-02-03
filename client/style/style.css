@@ -1,6 +1,3 @@
-      * {
-        
-      }
       html, body, .map-canvas, .container {
 
         width: 100%;
@@ -85,6 +82,10 @@
       .experience {
         right: 150%;
       }
-
+      .container + span {
+        position: absolute;
+        top: 10%;
+        right: 10%
+      }
 
    
