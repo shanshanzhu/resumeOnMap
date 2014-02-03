@@ -5,9 +5,32 @@ html(lang="en")
   meta(charset='utf-8')
   meta(name='viewport', content='initial-scale=1.0, user-scalable=no')
   link(href='style/style.css', rel='stylesheet', type='text/css')
-  script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places')
+  script(src='//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places')
+  script(type="text/javascript" src="//platform.linkedin.com/in.js").
+    api_key: 751eo1h601lgb9
+    onLoad: onLinkedInLoad
+    authorize: true
+    credentials_cookie: true
+    // authorize: true
 
+  script(type='text/javascript').
+    var onLinkedInLoad = function() {
+      IN.Event.on(IN, "auth", onLinkedInAuth);
+    }
+    var onLinkedInAuth = function() {
+      // location.href = '/signin';
+      $.post('/signin');//fail
+      //http://developer.linkedin.com/forum/jsapi-secure-cookie-empty-and-has-crc-end
+      IN.API.Profile("me").result(displayProfiles);
+    }
+    function displayProfiles(profiles) {
+      member = profiles.values[0];
+      console.log(member);
+    }
   body
     div.container
-  script(data-main="scripts/main" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js")
+    script(type="IN/Login")
+     // data-onAuth="[onAuthCallback]" data-onLogout="[onLogoutCallback]")
+
+  script(data-main="scripts/main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js")
 
