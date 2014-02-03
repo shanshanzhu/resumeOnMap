@@ -1,27 +1,5 @@
 define(["model/app", "view/appView",
   "backbone","jquery"], function(app, appView){
-    var data = [
-          {'feature': 'Education',
-          'content': [
-              {"longitude":116.32, 'latitude':40, "text": 'Bachelor of Science'},
-              {"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
-            ]
-          },
-          {'feature':'Work',
-          'content': [
-              {"longitude":-125, 'latitude':42, "text": 'Research Data Analyst'},
-              {"longitude":-220,'latitude':30, "text": 'Software Consultant'}
-            ]
-          },
-          {'feature':'all',
-          'content': [
-              [1999,{"longitude":-125, 'latitude':42, "text": 'Research Data Analyst'}],
-              {"longitude":-220,'latitude':30, "text": 'Software Consultant'},
-                 {"longitude":116.32, 'latitude':40, "text": 'Bachelor of Science'},
-              {"longitude":-123.24, 'latitude':49.27, "text": 'Master of Science'}
-            ]
-          }
-          ];
   var Router = Backbone.Router.extend({
     
     routes: {
