@@ -50,20 +50,20 @@ app.use(function(err, req, res, next){
 // Initialize routing
 routes(app);
 
-var options = {
-    key:    fs.readFileSync('ssl/server.key',{encoding:'utf8'}),
-    cert:   fs.readFileSync('ssl/server.crt',{encoding:'utf8'}),
-    ca:     fs.readFileSync('ssl/ca.crt',{encoding:'utf8'}),
-    requestCert:        true,
-    rejectUnauthorized: false
-};
+// var options = {
+//     key:    fs.readFileSync('ssl/server.key',{encoding:'utf8'}),
+//     cert:   fs.readFileSync('ssl/server.crt',{encoding:'utf8'}),
+//     ca:     fs.readFileSync('ssl/ca.crt',{encoding:'utf8'}),
+//     requestCert:        true,
+//     rejectUnauthorized: false
+// };
 // options.agent = new https.Agent(options);
 
 
-// var options = {
-//   key: fs.readFileSync('key.pem',{encoding:'utf8'}),
-//   cert: fs.readFileSync('key-cert.pem',{encoding:'utf8'})
-// };
+var options = {
+  key: fs.readFileSync('key.pem',{encoding:'utf8'}),
+  cert: fs.readFileSync('key-cert.pem',{encoding:'utf8'})
+};
 console.log(options);
 // app.listen(port);
 // http.createServer(app).listen(port);
